@@ -4,7 +4,7 @@ CREATE TABLE dbo.SMS (
     MessageId INT PRIMARY KEY NOT NULL,
     Cost decimal NOT NULL,
     Message VARCHAR(255) NOT NULL,
-    Status byte NOT NULL,
+    Status TINYINT NOT NULL,
     Sender VARCHAR(255) NOT NULL,
     CreatedDate DATETIME2(0) DEFAULT CURRENT_TIMESTAMP
 );

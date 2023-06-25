@@ -8,9 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Yani.Models.Database;
 
+[Keyless]
 public partial class Logs
 {
-    [Key]
     [Column("LogID")]
     public int LogId { get; set; }
 

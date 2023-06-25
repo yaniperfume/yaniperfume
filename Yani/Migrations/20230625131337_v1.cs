@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Yani.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class v1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -548,9 +548,6 @@ namespace Yani.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: true),
                     UserGroupID = table.Column<int>(type: "int", nullable: true, defaultValueSql: "((2))"),
-                    Username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     PasswordHash = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     PasswordResetToken = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     PasswordResetTokenExpiry = table.Column<DateTime>(type: "datetime", nullable: true),
@@ -559,8 +556,6 @@ namespace Yani.Migrations
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorSecretKey = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     TwoFactorBackupCodes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
-                    FailedLoginAttempts = table.Column<int>(type: "int", nullable: false),
-                    IsLockedOut = table.Column<bool>(type: "bit", nullable: false),
                     LastPasswordChangeDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     PasswordExpirationDate = table.Column<DateTime>(type: "datetime", nullable: true),
                     PasswordHistory = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
@@ -574,6 +569,7 @@ namespace Yani.Migrations
                     Id = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -1534,27 +1530,6 @@ namespace Yani.Migrations
                 name: "IX_UserLogin_UserID",
                 table: "UserLogin",
                 column: "UserID");
-
-            migrationBuilder.CreateIndex(
-                name: "UQ__UserLogi__536C85E4E6094AF7",
-                table: "UserLogin",
-                column: "Username",
-                unique: true,
-                filter: "[Username] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "UQ__UserLogi__5C7E359E8BC903F0",
-                table: "UserLogin",
-                column: "Phone",
-                unique: true,
-                filter: "[Phone] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "UQ__UserLogi__A9D10534A5BCE241",
-                table: "UserLogin",
-                column: "Email",
-                unique: true,
-                filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WebsiteVisitors_UserID",

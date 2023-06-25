@@ -9,21 +9,17 @@ using Yani.Services;
 namespace Yani.Controllers
 {
     public class HomeController : Controller
-    { 
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+    {  
         private readonly BeShopContext _context;
 
-        public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, SmsService smsService, BeShopContext context)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
+        public HomeController(  SmsService smsService, BeShopContext context)
+        { 
             _context = context;
         }
 
         public IActionResult Index()
         {
-            var currentUser = _userManager.Users.FirstOrDefault();
+            var currentUser = ViewBag.User;
             return View();
         }
 

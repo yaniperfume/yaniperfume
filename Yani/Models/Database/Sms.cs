@@ -14,7 +14,7 @@ public partial class Sms
     [Key]
     public int MessageId { get; set; }
 
-    [Column(TypeName = "decimal(18, 3)")]
+    [Column(TypeName = "decimal(18, 0)")]
     public decimal Cost { get; set; }
 
     [Required]

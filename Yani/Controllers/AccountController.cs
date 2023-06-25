@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,26 +12,25 @@ using System.Text.RegularExpressions;
 using Yani.Models.Account;
 using Yani.Models.Database;
 using Yani.Services;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Yani.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly SmsService _smsService;
         private readonly BeShopContext _context;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, SmsService smsService, BeShopContext context)
+        public AccountController(SmsService smsService, BeShopContext context)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _smsService = smsService;
             _context = context;
         }
 
         public IActionResult Index()
         {
+
             return RedirectToAction("Index", "Dashboard");
         }
 
@@ -83,13 +85,15 @@ namespace Yani.Controllers
             userLogin.UserId = user.UserId;
             _context.UserLogin.Add(userLogin);
             await _context.SaveChangesAsync();
-            IdentityUser idu = new IdentityUser();
-            idu.Id = userLogin.LoginId.ToString();
-            idu.PhoneNumber = userLogin.Phone;
-            idu.UserName = userLogin.Username;
-            idu.Email = userLogin.Email;
-            await _signInManager.SignInAsync(idu, true);
 
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, userLogin.Username),
+                new Claim(ClaimTypes.Email, userLogin.Email),
+                new Claim(ClaimTypes.NameIdentifier, userLogin.LoginId.ToString())
+            };
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
             // Redirect to the home page
             return RedirectToAction("Index", "Home");
         }
@@ -102,48 +106,41 @@ namespace Yani.Controllers
                 return View(model);
             }
 
-          
-            try
+            var userLogin = await _context.UserLogin.SingleOrDefaultAsync(u => u.Username == model.Username || u.Email == model.Username);
+
+            if (userLogin is null)
             {
-                var user = await _context.UserLogin.SingleOrDefaultAsync(u => u.Username == model.Username || u.Email == model.Username);
+                ModelState.AddModelError("Username", "نام کاربری یا ایمیل وجود ندارد");
+                return View(model);
+            }
 
-                if (user is null)
+            using SHA256 sha256Hash = SHA256.Create();
+            byte[] pbytes = Encoding.UTF8.GetBytes(model.Password);
+            byte[] bytes = sha256Hash.ComputeHash(pbytes);
+            string passwordHash = BitConverter.ToString(bytes).Replace("-", "");
+
+            if (userLogin.PasswordHash != passwordHash)
+            {
+                ModelState.AddModelError("Password", "رمز عبور وارد شده نامعتبر است");
+                return View(model);
+            }
+
+
+            var claims = new List<Claim>
                 {
-                    ModelState.AddModelError("Username", "نام کاربری یا ایمیل وجود ندارد");
-                    return View(model);
-                }
-
-                using SHA256 sha256Hash = SHA256.Create();
-                byte[] pbytes = Encoding.UTF8.GetBytes(model.Password);
-                byte[] bytes = sha256Hash.ComputeHash(pbytes);
-                string passwordHash = BitConverter.ToString(bytes).Replace("-", "");
-
-                if (user.PasswordHash != passwordHash)
-                {
-                    ModelState.AddModelError("Password", "رمز عبور وارد شده نامعتبر است");
-                    return View(model);
-                }
-
-                var identityUser = new IdentityUser
-                {
-                    PhoneNumber = user.Phone,
-                    UserName = user.Username,
-                    Email = user.Email
+                    new Claim(ClaimTypes.Name, userLogin.Username),
+                    new Claim(ClaimTypes.Email, userLogin.Email),
+                    new Claim(ClaimTypes.NameIdentifier, userLogin.LoginId.ToString())
                 };
-                var result = await _userManager.CreateAsync(identityUser);
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
 
-                if (!result.Succeeded)
-                {
-                    ModelState.AddModelError("Username", "خطای داخلی سرور لطفا مجدد تلاش کنید.");
-                    return View(model);
-                }
-
-            }
-            catch (Exception e)
+            if (userLogin == null)
             {
-                _ = e;
+                ModelState.AddModelError("Username", "خطای داخلی سرور لطفا مجدد تلاش کنید.");
+                return View(model);
             }
-          
+
             return RedirectToAction("Index", "Home");
         }
 
@@ -175,13 +172,15 @@ namespace Yani.Controllers
                     _context.UserLogin.Add(userLogin);
                 }
                 await _context.SaveChangesAsync();
-                IdentityUser idu = new IdentityUser();
-                idu.Id = userLogin.LoginId.ToString();
-                idu.PhoneNumber = userLogin.Phone;
-                idu.UserName = userLogin.Username;
-                idu.Email = userLogin.Email;
-                await _signInManager.SignInAsync(idu, true);
 
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, userLogin.Username),
+                    new Claim(ClaimTypes.Email, userLogin.Email),
+                    new Claim(ClaimTypes.NameIdentifier, userLogin.LoginId.ToString())
+                };
+                var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
                 // Redirect to the home page
                 return RedirectToAction("Index", "Home");
             }
@@ -224,7 +223,7 @@ namespace Yani.Controllers
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
+            await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
     }

@@ -4,16 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Yani.Models.Database;
 
-[Index("Username", Name = "UQ__UserLogi__536C85E4E6094AF7", IsUnique = true)]
-[Index("Phone", Name = "UQ__UserLogi__5C7E359E8BC903F0", IsUnique = true)]
-[Index("Email", Name = "UQ__UserLogi__A9D10534A5BCE241", IsUnique = true)]
-public partial class UserLogin : IdentityUser
-{  
+[Index("Username", Name = "UQ__UserLogi__536C85E4AECB2DB9", IsUnique = true)]
+[Index("Phone", Name = "UQ__UserLogi__5C7E359EA0823D95", IsUnique = true)]
+[Index("Email", Name = "UQ__UserLogi__A9D1053439AC9AA9", IsUnique = true)]
+public partial class UserLogin
+{
     [Key]
     [Column("LoginID")]
     public int LoginId { get; set; }

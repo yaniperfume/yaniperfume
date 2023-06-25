@@ -4,13 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Yani.Models.Database;
 
-[Index("GroupName", Name = "UQ__UserGrou__6EFCD434725CDDB1", IsUnique = true)]
-public partial class UserGroups : IdentityRole
+[Index("GroupName", Name = "UQ__UserGrou__6EFCD4342D6319E2", IsUnique = true)]
+public partial class UserGroups
 {
     [Key]
     [Column("UserGroupID")]

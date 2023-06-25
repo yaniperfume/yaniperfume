@@ -12,8 +12,8 @@ using Yani.Models.Database;
 namespace Yani.Migrations
 {
     [DbContext(typeof(BeShopContext))]
-    [Migration("20230625092537_Init")]
-    partial class Init
+    [Migration("20230625131337_v1")]
+    partial class v1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1552,14 +1552,10 @@ namespace Yani.Migrations
                         .HasDefaultValueSql("(getdate())");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<int>("FailedLoginAttempts")
-                        .HasColumnType("int");
 
                     b.Property<string>("Id")
                         .IsRequired()
@@ -1569,9 +1565,6 @@ namespace Yani.Migrations
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsEmailVerified")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsLockedOut")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsPasswordExpired")
@@ -1614,10 +1607,6 @@ namespace Yani.Migrations
 
                     b.Property<DateTime?>("PasswordResetTokenExpiry")
                         .HasColumnType("datetime");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -1665,10 +1654,6 @@ namespace Yani.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Username")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.HasKey("LoginId")
                         .HasName("PK__UserLogi__4DDA2838463D6640");
 
@@ -1679,18 +1664,6 @@ namespace Yani.Migrations
                     b.HasIndex("UserGroupId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex(new[] { "Username" }, "UQ__UserLogi__536C85E4E6094AF7")
-                        .IsUnique()
-                        .HasFilter("[Username] IS NOT NULL");
-
-                    b.HasIndex(new[] { "Phone" }, "UQ__UserLogi__5C7E359E8BC903F0")
-                        .IsUnique()
-                        .HasFilter("[Phone] IS NOT NULL");
-
-                    b.HasIndex(new[] { "Email" }, "UQ__UserLogi__A9D10534A5BCE241")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("UserLogin");
                 });

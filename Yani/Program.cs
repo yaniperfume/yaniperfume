@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Configuration;
-using Yani.Extentions;
 using Yani.Models;
 using Yani.Models.Database;
 using Yani.Services;
@@ -29,23 +29,20 @@ namespace Yani
             builder.Services.AddScoped<SmsService>();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddBeShopIdentity(builder.Configuration.GetConnectionString("BeShopConnection") ?? throw new InvalidOperationException("Connection string 'BeShopConnection' not found."));
-
-            builder.Services.ConfigureApplicationCookie(options =>
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Strict;
+                options.Cookie.IsEssential = true;
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
-                options.SlidingExpiration = true;
-            });
-
-            builder.Services.AddScoped<UserManager<IdentityUser>>();
-            builder.Services.AddScoped<SignInManager<IdentityUser>>();
-            builder.Services.AddScoped<RoleManager<IdentityRole>>();
-
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+            }); 
             builder.Services.AddDistributedMemoryCache();
+
             builder.Services.AddSession(options =>
             {
                 options.Cookie.Name = ".BeShop.Session";
@@ -58,8 +55,6 @@ namespace Yani
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -69,13 +64,14 @@ namespace Yani
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseStatusCodePagesWithReExecute("/Error/{0}");
-            app.Map("/Error", errorApp =>
-            {
-                errorApp.UseExceptionHandler("/Error/500");
-                errorApp.UseStatusCodePagesWithReExecute("/Error/{0}");
-            });
-            app.UseExceptionHandler("/Error/500");
+            //app.UseStatusCodePagesWithReExecute("/Error/{0}");
+            //app.Map("/Error", errorApp =>
+            //{
+            //    errorApp.UseExceptionHandler("/Error/500");
+            //    errorApp.UseStatusCodePagesWithReExecute("/Error/{0}");
+            //});
+            //app.UseExceptionHandler("/Error/500");
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Dashboard}/{action=Index}");
