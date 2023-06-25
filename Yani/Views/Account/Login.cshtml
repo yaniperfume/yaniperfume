@@ -57,7 +57,7 @@
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div class="tab-pane active" id="phoneLogin" role="tabpanel">
+                                <div class="tab-pane" id="phoneLogin" role="tabpanel">
                                     <div class="p-40">
                                         <form action="/Account/LoginWithPhoneNumber" method="post" id="loginWithPhone">
                                             <div class="form-group">
@@ -82,12 +82,12 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="tab-pane" id="passLogin" role="tabpanel">
+                                <div class="tab-pane active" id="passLogin" role="tabpanel">
                                     <div class="p-40">
                                         <form action="/Account/Login" method="post">
                                             <div class="form-group">
                                                 <div class="input-group mb-3">
-                                                    <input asp-for="Username" type="text" class="form-control ps-15 bg-transparent" placeholder="نام کاربری" name="Username">
+                                                    <input asp-for="Username" type="text" class="form-control ps-15 bg-transparent" placeholder="نام کاربری یا ایمیل" name="Username">
                                                     <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
                                                 </div>
                                                 <span asp-validation-for="Username" class="text-danger"></span>

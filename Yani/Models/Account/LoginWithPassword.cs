@@ -4,7 +4,7 @@ namespace Yani.Models.Account
 {
     public class LoginWithPassword
     {
-        [Required(ErrorMessage = "نام کاربری الزامی است.")]
+        [Required(ErrorMessage = "نام کاربری یا ایمیل الزامی است.")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "پسوورد الزامی است.")]

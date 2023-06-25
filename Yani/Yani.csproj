@@ -32,6 +32,7 @@
 
 	<ItemGroup>
 		<Folder Include="Data\" />
+		<Folder Include="NewFolder\" />
 		<Folder Include="Views\Shared\" />
 		<Folder Include="wwwroot\images\" />
 	</ItemGroup>

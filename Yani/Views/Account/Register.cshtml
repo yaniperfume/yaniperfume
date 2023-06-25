@@ -1,4 +1,4 @@
-﻿@model Yani.Models.Account.LoginWithPassword
+﻿@model Yani.Models.Account.Register
 @{
     Layout = null;
 }
@@ -55,38 +55,49 @@
                                 <form action="/account/register" method="post">
                                     <div class="form-group">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control ps-15 bg-transparent" placeholder="نام">
+                                            <input asp-for="Name" type="text" class="form-control ps-15 bg-transparent" placeholder="نام" name="Name">
                                             <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-
                                         </div>
+                                        <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control ps-15 bg-transparent" placeholder="نام خانوادگی">
+                                            <input asp-for="Family" type="text" class="form-control ps-15 bg-transparent" placeholder="نام خانوادگی" name="Family">
                                             <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
-
                                         </div>
+                                        <span asp-validation-for="Family" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group mb-3">
-                                            <input type="email" class="form-control ps-15 bg-transparent" placeholder="ایمیل">
+                                            <input asp-for="Email" type="email" class="form-control ps-15 bg-transparent" placeholder="ایمیل" name="Email">
                                             <span class="input-group-text bg-transparent"><i class="ti-email"></i></span>
-
                                         </div>
+                                        <span asp-validation-for="Email" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group mb-3">
-                                            <input type="password" class="form-control ps-15 bg-transparent" placeholder="رمز عبور">
-                                            <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-
+                                            <select asp-for="Gender" class="form-select" name="Gender">
+                                                <option value="">جنسیت</option>
+                                                <option value="1">آقا</option>
+                                                <option value="0">خانم</option>
+                                            </select>
+                                            <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
                                         </div>
+                                        <span asp-validation-for="Gender" class="text-danger"></span>
                                     </div>
                                     <div class="form-group">
                                         <div class="input-group mb-3">
-                                            <input type="password" class="form-control ps-15 bg-transparent" placeholder="تائید رمز عبور">
+                                            <input asp-for="Password" type="password" class="form-control ps-15 bg-transparent" placeholder="رمز عبور" name="Password">
                                             <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
-
                                         </div>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input asp-for="Confirm" type="password" class="form-control ps-15 bg-transparent" placeholder="تائید رمز عبور" name="Confirm">
+                                            <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
+                                        </div>
+                                        <span asp-validation-for="Confirm" class="text-danger"></span>
                                     </div>
                                     <div class="row">
                                         <div class="col-6">
@@ -94,9 +105,10 @@
                                         </div>
                                         <div class="col-6" style="float:right; direction:rtl;">
                                             <div class="checkbox">
-                                                <input type="checkbox" id="basic_checkbox_1">
+                                                <input asp-for="Agreement" type="checkbox" id="basic_checkbox_1" name="Agreement">
                                                 <label for="basic_checkbox_1">شرایط را <a href="#" class="text-warning"><b>قبول دارم</b></a></label>
                                             </div>
+                                            <span asp-validation-for="Agreement" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </form>
@@ -111,11 +123,9 @@
         </div>
     </div>
 
-
     <!-- Vendor JS -->
     <script src="@Url.Content("~/assets/js/vendors.min.js")"></script>
-    <script src="@Url.Content("~/assets/icons/feather-icons/feather.min.js")"></script>
-    <script src="@Url.Content("~/assets/js/pages/login.js")"></script>
+    <script src="@Url.Content("~/assets/icons/feather-icons/feather.min.js")"></script> 
 
 </body>
 </html>

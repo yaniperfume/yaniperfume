@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" itemprop="keywords" content="@ViewBag.Keywords" />
+    <meta property="og:locale" content="@ViewBag.Locale" />
+    <meta property="og:type" content="shop" />
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:site_name" content="@ViewBag.Name" />
+    <meta property="og:image" content="@ViewBag.Image" />
+    <meta name="msapplication-TileImage" content="@ViewBag.Image">
+    <meta name="theme-color" content="#555">
+
+    <title>@ViewBag.Title</title>
+
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="manifest" href="/manifest.json" asp-append-version="true">
+    <link rel="icon" type="image/png" sizes="192x192" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="shortcut icon" href="/fav.png" asp-append-version="true">
+
+    <!-- Vendors Style-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/vendors_css.css")">
+
+    <!-- Style-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/style.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/skin_color.css")">
+</head>
+<body class="hold-transition theme-primary bg-img" style="background-image: url(/images/auth-bg/bg-4.jpg)">
+    <section class="error-page h-p100">
+        <div class="container h-p100">
+            <div class="row h-p100 align-items-center justify-content-center text-center">
+                <div class="col-lg-7 col-md-10 col-12">
+                    <div class="rounded10 p-50">
+                        <img src="/images/auth-bg/404.jpg" class="max-w-200" alt="" />
+                        <h1>صفحه پیدا نشد !</h1>
+                        <h3>یا حذف شده یا اصلا وجود نداشته </h3>
+                        <div class="my-30"><a href="/" class="btn btn-danger">بازگشت</a></div>
+
+                        <form class="search-form mx-auto mt-30 w-p75">
+                            <div class="input-group rounded5 overflow-h">
+                                <button type="submit" name="submit" class="btn btn-danger btn-sm"><i class="fa fa-search"></i></button>
+                                <input type="text" name="search" class="form-control" placeholder="جستجو ..." style="direction:rtl;">
+                            </div>
+                            <!-- /.input-group -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

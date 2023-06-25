@@ -220,8 +220,7 @@ CREATE TABLE UserLogin (
     CONSTRAINT CK_PasswordHistory CHECK(PasswordHistory IS NOT NULL OR PasswordExpirationDate IS NULL),
     CONSTRAINT CK_FailedLoginAttempts CHECK(FailedLoginAttempts >= 0),
     CONSTRAINT CK_PasswordExpirationDate CHECK(PasswordExpirationDate IS NULL OR PasswordExpirationDate > LastPasswordChangeDate),
-    CONSTRAINT CK_TwoFactorBackupCodes CHECK(TwoFactorBackupCodes IS NULL OR LEN(TwoFactorBackupCodes) = 90),
-    CONSTRAINT CK_PasswordHash CHECK(LEN(PasswordHash) = 60)
+    CONSTRAINT CK_TwoFactorBackupCodes CHECK(TwoFactorBackupCodes IS NULL OR LEN(TwoFactorBackupCodes) = 90)
 );
 
 -- Create Brand table

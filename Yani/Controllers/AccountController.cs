@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Buffers.Text;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using Yani.Models.Account;
@@ -43,6 +45,56 @@ namespace Yani.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> Register(Register model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using SHA256 sha256Hash = SHA256.Create();
+            byte[] pbytes = Encoding.UTF8.GetBytes(model.Password);
+            byte[] bytes = sha256Hash.ComputeHash(pbytes);
+            string passwordHash = BitConverter.ToString(bytes).Replace("-", "");
+            string username;
+            do
+            {
+                username = new Random().Next(1, 99999999).ToString("D9");
+            } while (await _context.UserLogin.AnyAsync(u => u.Username == username));
+
+            UserLogin userLogin = new UserLogin()
+            {
+                PasswordHash = Convert.ToHexString(bytes),
+                Email = model.Email,
+                PasswordHistory = passwordHash,
+                IsEmailVerified = false,
+                LastLoginDate = DateTime.Now,
+                Username = username,
+            };
+
+            Users user = new Users()
+            {
+                FirstName = model.Name,
+                LastName = model.Family,
+                Gender = model.Gender == "1" ? true : false,
+            };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+            userLogin.UserId = user.UserId;
+            _context.UserLogin.Add(userLogin);
+            await _context.SaveChangesAsync();
+            IdentityUser idu = new IdentityUser();
+            idu.Id = userLogin.LoginId.ToString();
+            idu.PhoneNumber = userLogin.Phone;
+            idu.UserName = userLogin.Username;
+            idu.Email = userLogin.Email;
+            await _signInManager.SignInAsync(idu, true);
+
+            // Redirect to the home page
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Login(LoginWithPassword model)
         {
             if (!ModelState.IsValid)
@@ -50,23 +102,49 @@ namespace Yani.Controllers
                 return View(model);
             }
 
-            var user = await _userManager.FindByNameAsync(model.Username);
-            if (user == null)
+          
+            try
             {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt");
-                return View(model);
-            }
+                var user = await _context.UserLogin.SingleOrDefaultAsync(u => u.Username == model.Username || u.Email == model.Username);
 
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, false);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Home");
+                if (user is null)
+                {
+                    ModelState.AddModelError("Username", "نام کاربری یا ایمیل وجود ندارد");
+                    return View(model);
+                }
+
+                using SHA256 sha256Hash = SHA256.Create();
+                byte[] pbytes = Encoding.UTF8.GetBytes(model.Password);
+                byte[] bytes = sha256Hash.ComputeHash(pbytes);
+                string passwordHash = BitConverter.ToString(bytes).Replace("-", "");
+
+                if (user.PasswordHash != passwordHash)
+                {
+                    ModelState.AddModelError("Password", "رمز عبور وارد شده نامعتبر است");
+                    return View(model);
+                }
+
+                var identityUser = new IdentityUser
+                {
+                    PhoneNumber = user.Phone,
+                    UserName = user.Username,
+                    Email = user.Email
+                };
+                var result = await _userManager.CreateAsync(identityUser);
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("Username", "خطای داخلی سرور لطفا مجدد تلاش کنید.");
+                    return View(model);
+                }
+
             }
-            else
+            catch (Exception e)
             {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt");
-                return View(model);
+                _ = e;
             }
+          
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -77,18 +155,26 @@ namespace Yani.Controllers
             if (verifyCode == model.Otp)
             {
                 string phoneNumber = _smsService.NormalizePhone(model.PhoneNumber);
+                string username;
+                do
+                {
+                    username = new Random().Next(1, 99999999).ToString("D9");
+                } while (await _context.UserLogin.AnyAsync(u => u.Username == username));
+
+
                 UserLogin userLogin = await _context.UserLogin.FirstOrDefaultAsync(x => x.Phone == phoneNumber) ?? new UserLogin() { Phone = phoneNumber };
                 userLogin.LastLoginDate = DateTime.Now;
-                userLogin.Username = userLogin.Username ?? new Random().Next(10000000, 99999999).ToString();
+                userLogin.Username = userLogin.Username ?? username;
                 userLogin.Email = userLogin.Email ?? $"{userLogin.Username}@{HttpContext.Request.Host.Value}";
                 if (userLogin.LoginId != null)
                 {
-                    _context.Update(userLogin);
+                    _context.UserLogin.Update(userLogin);
                 }
                 else
                 {
-                    _context.Add(userLogin);
+                    _context.UserLogin.Add(userLogin);
                 }
+                await _context.SaveChangesAsync();
                 IdentityUser idu = new IdentityUser();
                 idu.Id = userLogin.LoginId.ToString();
                 idu.PhoneNumber = userLogin.Phone;
@@ -98,7 +184,6 @@ namespace Yani.Controllers
 
                 // Redirect to the home page
                 return RedirectToAction("Index", "Home");
-
             }
 
             // Sign in the user

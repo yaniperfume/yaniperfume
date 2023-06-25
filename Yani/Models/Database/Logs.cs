@@ -7,8 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace Yani.Models.Database;
- 
-[Index("Title", Name = "IX_Logs_Title", IsUnique = true)]
+
 public partial class Logs
 {
     [Key]

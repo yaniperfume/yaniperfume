@@ -159,6 +159,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[UserGroups]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[UserLogin]",
          "ObjectType": 0
       },

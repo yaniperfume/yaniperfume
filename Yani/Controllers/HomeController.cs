@@ -1,20 +1,29 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using Yani.Models;
+using Yani.Models.Database;
+using Yani.Services;
 
 namespace Yani.Controllers
 {
     public class HomeController : Controller
-    {
-        private readonly ILogger<HomeController> _logger;
+    { 
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly BeShopContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, SmsService smsService, BeShopContext context)
         {
-            _logger = logger;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            var currentUser = _userManager.Users.FirstOrDefault();
             return View();
         }
 

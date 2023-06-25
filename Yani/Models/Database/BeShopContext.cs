@@ -89,12 +89,14 @@ public partial class BeShopContext : DbContext
 
     public virtual DbSet<UserAddresses> UserAddresses { get; set; }
 
+    public virtual DbSet<UserGroups> UserGroups { get; set; }
+
     public virtual DbSet<UserLogin> UserLogin { get; set; }
 
     public virtual DbSet<Users> Users { get; set; }
 
     public virtual DbSet<WebsiteVisitors> WebsiteVisitors { get; set; }
-     
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Persian_100_CI_AI");
@@ -272,12 +274,9 @@ public partial class BeShopContext : DbContext
 
         modelBuilder.Entity<Logs>(entity =>
         {
-            entity.HasIndex(e => e.LogId, "PK_Logs_LogID")
-                .IsUnique()
-                .IsClustered();
+            entity.HasKey(e => e.LogId).HasName("PK__Logs__5E5499A8E79F50BA");
 
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
-            entity.Property(e => e.LogId).ValueGeneratedOnAdd();
         });
 
         modelBuilder.Entity<OrderItems>(entity =>
@@ -501,6 +500,9 @@ public partial class BeShopContext : DbContext
 
         modelBuilder.Entity<Sms>(entity =>
         {
+            entity.HasKey(e => e.MessageId).HasName("PK__SMS__C87C0C9C8773DDD3");
+
+            entity.Property(e => e.MessageId).ValueGeneratedNever();
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
         });
 
@@ -600,22 +602,34 @@ public partial class BeShopContext : DbContext
                 .HasConstraintName("FK__UserAddre__UserI__0FB750B3");
         });
 
+        modelBuilder.Entity<UserGroups>(entity =>
+        {
+            entity.HasKey(e => e.UserGroupId).HasName("PK__UserGrou__FA5A61E004416180");
+
+            entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.LastLoginDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.ListPermission).HasDefaultValueSql("('*')");
+            entity.Property(e => e.RegistrationDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.UpdateDate).HasDefaultValueSql("(getdate())");
+        });
+
         modelBuilder.Entity<UserLogin>(entity =>
         {
-            entity.HasKey(e => e.LoginId).HasName("PK__UserLogi__4DDA28381852A194");
+            entity.HasKey(e => e.LoginId).HasName("PK__UserLogi__4DDA2838463D6640");
 
             entity.Property(e => e.CreatedDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.LastLoginDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.RegistrationDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.UpdateDate).HasDefaultValueSql("(getdate())");
+            entity.Property(e => e.UserGroupId).HasDefaultValueSql("((2))");
 
-            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.UserLoginCreatedByNavigation).HasConstraintName("FK__UserLogin__Creat__297722B6");
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.UserLoginCreatedByNavigation).HasConstraintName("FK__UserLogin__Creat__795DFB40");
 
-            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.UserLoginUpdatedByNavigation).HasConstraintName("FK__UserLogin__Updat__2882FE7D");
+            entity.HasOne(d => d.UpdatedByNavigation).WithMany(p => p.UserLoginUpdatedByNavigation).HasConstraintName("FK__UserLogin__Updat__7869D707");
 
-            entity.HasOne(d => d.User).WithMany(p => p.UserLoginUser)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__UserLogin__UserI__2A6B46EF");
+            entity.HasOne(d => d.UserGroup).WithMany(p => p.UserLogin).HasConstraintName("FK__UserLogin__UserG__7775B2CE");
+
+            entity.HasOne(d => d.User).WithMany(p => p.UserLoginUser).HasConstraintName("FK__UserLogin__UserI__7A521F79");
         });
 
         modelBuilder.Entity<Users>(entity =>

@@ -7,14 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
 namespace Yani.Models.Database;
- 
+
 [Table("SMS")]
 public partial class Sms
 {
     [Key]
     public int MessageId { get; set; }
 
-    [Column(TypeName = "decimal(18, 0)")]
+    [Column(TypeName = "decimal(18, 3)")]
     public decimal Cost { get; set; }
 
     [Required]

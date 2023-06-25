@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Yani.Models.Database;
 
-[Index("Username", Name = "UQ__UserLogi__536C85E42508965E", IsUnique = true)]
-[Index("Phone", Name = "UQ__UserLogi__5C7E359E4C073249", IsUnique = true)]
-[Index("Email", Name = "UQ__UserLogi__A9D10534FEF4C098", IsUnique = true)]
-public partial class UserLogin 
-{
+[Index("Username", Name = "UQ__UserLogi__536C85E4E6094AF7", IsUnique = true)]
+[Index("Phone", Name = "UQ__UserLogi__5C7E359E8BC903F0", IsUnique = true)]
+[Index("Email", Name = "UQ__UserLogi__A9D10534A5BCE241", IsUnique = true)]
+public partial class UserLogin : IdentityUser
+{  
     [Key]
     [Column("LoginID")]
     public int LoginId { get; set; }
@@ -21,14 +21,17 @@ public partial class UserLogin
     [Column("UserID")]
     public int? UserId { get; set; }
 
+    [Column("UserGroupID")]
+    public int? UserGroupId { get; set; }
+
     [StringLength(50)]
-    public string? Username { get; set; }
+    public string Username { get; set; }
 
     [StringLength(255)]
-    public string? Email { get; set; }
+    public string Email { get; set; }
 
     [StringLength(20)]
-    public string? Phone { get; set; }
+    public string Phone { get; set; }
 
     [StringLength(255)]
     public string PasswordHash { get; set; }
@@ -93,4 +96,8 @@ public partial class UserLogin
     [ForeignKey("UserId")]
     [InverseProperty("UserLoginUser")]
     public virtual Users User { get; set; }
+
+    [ForeignKey("UserGroupId")]
+    [InverseProperty("UserLogin")]
+    public virtual UserGroups UserGroup { get; set; }
 }
