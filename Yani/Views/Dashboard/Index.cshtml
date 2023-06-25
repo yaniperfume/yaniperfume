@@ -1,0 +1,276 @@
+﻿@model Yani.Models.Dashboard.DashboardModel
+@{
+    Layout = "_Dashboard";
+    var total = Model.UsersByGender.Male + Model.UsersByGender.Female;
+    var malePercentage = (decimal)Model.UsersByGender.Male / total * 100;
+    var femalePercentage = (decimal)Model.UsersByGender.Female / total * 100;
+}
+@section Scripts {
+    <script src="@Url.Content("~/assets/vendor_components/chartist-js-develop/chartist.js")"></script>
+    <script src="@Url.Content("~/assets/js/pages/dashboard.js")"></script>
+}
+@section Styles {
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendor_components/chartist-js-develop/chartist.css")">
+}
+<div class="row">
+    <div class="col-xl-8 col-12">
+        <div class="row">
+            <div class="col-xl-3 col-md-6 col-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="mb-25 d-flex align-items-center justify-content-between">
+                            <i class="text-success fs-30 fa fa-cart-plus"></i>
+                            <h4 class="fw-500 mb-0 text-success mm">@Model.BoxesModel.TotalOrders.Percentage</h4>
+                        </div>
+                        <h4 class="fw-600 mb-5 mm">@Model.BoxesModel.TotalOrders.Value</h4>
+                        <p class="text-fade mb-0 mm">کل سفارشات</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="mb-25 d-flex align-items-center justify-content-between">
+                            <i class="text-danger fs-30 fa fa-cart-arrow-down"></i>
+                            <h4 class="fw-500 mb-0 text-danger mm">@Model.BoxesModel.PendingOrders.Percentage</h4>
+                        </div>
+                        <h4 class="fw-600 mb-5 mm">@Model.BoxesModel.PendingOrders.Value</h4>
+                        <p class="text-fade mb-0 mm">ارسال نشده</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="mb-25 d-flex align-items-center justify-content-between">
+                            <i class="text-warning fs-30 fa fa-users"></i>
+                            <h4 class="fw-500 mb-0 text-warning mm">@Model.BoxesModel.TotalVisitors.Percentage</h4>
+                        </div>
+                        <h4 class="fw-600 mb-5 mm">@Model.BoxesModel.TotalVisitors.Value</h4>
+                        <p class="text-fade mb-0">کل بازدید کنندگان</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 col-12">
+                <div class="box">
+                    <div class="box-body">
+                        <div class="mb-25 d-flex align-items-center justify-content-between">
+                            <i class="text-primary fs-30 fa fa-exclamation-triangle"></i>
+                            <h4 class="fw-500 mb-0 text-primary mm">@Model.BoxesModel.OpenTickets.Percentage</h4>
+                        </div>
+                        <h4 class="fw-600 mb-5 mm">@Model.BoxesModel.OpenTickets.Value</h4>
+                        <p class="text-fade mb-0 mm">تیکت های باز</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h4 class="box-title">بازدید روزانه</h4>
+            </div>
+            <div class="box-body">
+                <div id="dailyVisitChart" class="h-300"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-12">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h4 class="box-title mm">سفارشات جدید</h4>
+                        <div class="box-controls pull-right">
+                            <button class="btn btn-xs btn-info-light">مشاهده همه</button>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div class="product-div">
+                            <div class="d-flex align-items-center mb-30">
+                                <div class="me-15 bg-lightest h-50 w-50 l-h-50 rounded text-center">
+                                    <img src="@Url.Content("~/images/product/product-1.png")" class="h-30" alt="">
+                                </div>
+                                <div class="d-flex flex-column flex-grow-1 me-2 fw-500">
+                                    <a href="#" class="text-dark hover-primary mb-0 fs-16">عطر</a>
+                                    <span class="text-fade fs-12">۲ دقیقه پیش</span>
+                                </div>
+                                <span class="badge badge badge-danger-light"><span class="fw-600">۹۹۰,۰۰۰ تومان</span></span>
+                            </div>
+                            <div class="d-flex align-items-center mb-30">
+                                <div class="me-15 bg-lightest h-50 w-50 l-h-50 rounded text-center">
+                                    <img src="@Url.Content("~/images/product/product-1.png")" class="h-30" alt="">
+                                </div>
+                                <div class="d-flex flex-column flex-grow-1 me-2 fw-500">
+                                    <a href="#" class="text-dark hover-primary mb-0 fs-16">عطر</a>
+                                    <span class="text-fade fs-12">۵ دقیقه پیش</span>
+                                </div>
+                                <span class="badge badge badge-danger-light"><span class="fw-600">۹۹۰,۰۰۰ تومان</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-xl-4 col-12">
+        <div class="box">
+            <div class="box-header no-border">
+                <h4 class="box-title mm">فروش ماهیانه به ریال</h4>
+            </div>
+            <div class="box-body">
+                <div id="monthlySales" class="h-300"></div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title mm">نظرات مشتریان</h4>
+            </div>
+            <div class="box-body">
+                <div class="bg-info-light p-10 rounded">
+                    <div class="d-flex align-items-center justify-content-around">
+                        <ul class="list-inline mb-0">
+                            @for (int i = 0; i < Model.UsersStars.OverallStar; i++)
+                            {
+                                <li><i class="text-info fa fa-star"></i></li>
+                            }
+                            @for (int i = 0; i < 5 - Model.UsersStars.OverallStar; i++)
+                            {
+                                <li><i class="text-info fa fa-star-o"></i></li>
+                            }
+                        </ul>
+                        <p class="mb-0">@Model.UsersStars.OverallStar از ۵</p>
+                    </div>
+                </div>
+                <p class="fs-12 my-10 text-center">مجموع @Model.UsersStars.Total بررسی</p>
+                <div class="ratingbar w-p100 px-0">
+                    <div class="mb-5 d-flex align-items-center justify-content-between">
+                        <div class="w-70">
+                            ۵ ستاره
+                        </div>
+                        <div class="w-p70 me-10">
+                            <div class="progress mb-0">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@((Model.UsersStars.FiveStar / (double)Model.UsersStars.Total) * 100)" aria-valuemin="0" aria-valuemax="100" style="width: @((Model.UsersStars.FiveStar / (double)Model.UsersStars.Total) * 100)%">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>@Model.UsersStars.FiveStar</div>
+                        </div>
+                    </div>
+                    <div class="mb-5 d-flex align-items-center justify-content-between">
+                        <div class="w-70">
+                            ۴ ستاره
+                        </div>
+                        <div class="w-p70 me-10">
+                            <div class="progress mb-0">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@((Model.UsersStars.FourStar / (double)Model.UsersStars.Total) * 100)" aria-valuemin="0" aria-valuemax="100" style="width: @((Model.UsersStars.FourStar / (double)Model.UsersStars.Total) * 100)%">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>@Model.UsersStars.FourStar</div>
+                        </div>
+                    </div>
+                    <div class="mb-5 d-flex align-items-center justify-content-between">
+                        <div class="w-70">
+                            ۳ ستاره
+                        </div>
+                        <div class="w-p70 me-10">
+                            <div class="progress mb-0">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@((Model.UsersStars.ThreeStar / (double)Model.UsersStars.Total) * 100)" aria-valuemin="0" aria-valuemax="100" style="width: @((Model.UsersStars.ThreeStar / (double)Model.UsersStars.Total) * 100)%">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>@Model.UsersStars.ThreeStar</div>
+                        </div>
+                    </div>
+                    <div class="mb-5 d-flex align-items-center justify-content-between">
+                        <div class="w-70">
+                            ۲ ستاره
+                        </div>
+                        <div class="w-p70 me-10">
+                            <div class="progress mb-0">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@((Model.UsersStars.TwoStar / (double)Model.UsersStars.Total) * 100)" aria-valuemin="0" aria-valuemax="100" style="width: @((Model.UsersStars.TwoStar / (double)Model.UsersStars.Total) * 100)%">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>@Model.UsersStars.TwoStar</div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="w-70">
+                            ۱ ستاره
+                        </div>
+                        <div class="w-p70 me-10">
+                            <div class="progress mb-0">
+                                <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="@((Model.UsersStars.OneStar / (double)Model.UsersStars.Total) * 100)" aria-valuemin="0" aria-valuemax="100" style="width: @((Model.UsersStars.OneStar / (double)Model.UsersStars.Total) * 100)%">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div>@Model.UsersStars.OneStar</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h4 class="box-title mm">جنسیت مشتریان</h4>
+            </div>
+            <div class="box-body">
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center">
+                        <div class="me-5 bg-primary-light text-center w-50 h-50 rounded l-h-60">
+                            <i class="text-primary fs-24 fa fa-female"></i>
+                        </div>
+                        <div>
+                            <p class="mb-0 mm">زن</p>
+                            <h4 class="mb-0 fw-500 mm">@femalePercentage%</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="me-5 bg-danger-light text-center w-50 h-50 rounded l-h-60">
+                            <i class="text-danger fs-24 fa fa-male"></i>
+                        </div>
+                        <div>
+                            <p class="mb-0 mm">مرد</p>
+                            <h4 class="mb-0 fw-500 mm">@malePercentage%</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header with-border">
+                <h4 class="box-title mm">محصولات محبوب</h4>
+                <div class="box-controls pull-right">
+                    <button class="btn btn-xs btn-info-light mm">مشاهده همه</button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="product-div">
+                    @foreach (var product in Model.RecommendedProducts)
+                    {
+                        @if (product != null)
+                        {
+                            <div class="d-flex align-items-center mb-30">
+                                <div class="me-15 bg-lightest h-50 w-50 l-h-50 rounded text-center">
+                                    <img src="@product.ImageUrl" class="h-30" alt="">
+                                </div>
+                                <div class="d-flex flex-column flex-grow-1 me-2 fw-500">
+                                    <a href="#" class="text-dark hover-primary mb-0 fs-16">عطر</a>
+                                    <span class="text-fade fs-12">@product.Price ریال</span>
+                                </div>
+                                @if (product.Brand != null)
+                                {
+                                    <span class="badge badge badge-light"><span class="fw-600">@product.Brand.BrandName</span></span>
+                                }
+                            </div>
+                        }
+                    }
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>

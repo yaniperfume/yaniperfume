@@ -1,0 +1,471 @@
+﻿
+<!DOCTYPE html>
+
+<html lang="@ViewBag.Locale">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" itemprop="keywords" content="@ViewBag.Keywords" />
+    <meta property="og:locale" content="@ViewBag.Locale" />
+    <meta property="og:type" content="shop" />
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:site_name" content="@ViewBag.Name" />
+    <meta property="og:image" content="@ViewBag.Image" />
+    <meta name="msapplication-TileImage" content="@ViewBag.Image">
+    <meta name="theme-color" content="#555">
+
+    <title>@ViewBag.Title</title>
+
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="manifest" href="/manifest.json" asp-append-version="true">
+    <link rel="icon" type="image/png" sizes="192x192" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="shortcut icon" href="/fav.png" asp-append-version="true">
+
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/vendors_css.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/style.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/skin_color.css")">
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body class="hold-transition light-skin sidebar-mini theme-primary fixed rtl">
+
+    <div class="wrapper">
+        <div id="loader"></div>
+
+        <header class="main-header">
+            <div class="d-flex align-items-center logo-box justify-content-start">
+                <!-- Logo -->
+                <a href="index.html" class="logo">
+                    <div class="logo-lg">
+                        <span class="light-logo"><img src="@Url.Content("~/images/logo-dark-text.png")" alt="logo"></span>
+                        <span class="dark-logo"><img src="@Url.Content("~/images/logo-light-text.png")" alt="logo"></span>
+                    </div>
+                </a>
+            </div>
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top">
+                <!-- Sidebar toggle button-->
+                <div class="app-menu">
+                    <ul class="header-megamenu nav">
+                        <li class="btn-group d-lg-inline-flex d-none">
+                            <div class="image" style="margin: auto;">
+                                <img src="@Url.Content("~/images/avatar/1.png")" class="avatar box-shadowed" alt="User Image">
+                            </div>
+                            <div class="app-menu">
+                                <div class="search-bx mx-5">
+                                    <form>
+                                        <div class="input-group">
+                                            <input type="search" class="form-control" placeholder="جستجو" aria-label="Search" aria-describedby="button-addon2">
+                                            <div class="input-group-append">
+                                                <button class="btn" type="submit" id="button-addon3"><img src="@Url.Content("~/images/svg-icon/search.svg")" class="img-fluid svg-icon" alt=""></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="navbar-custom-menu r-side">
+                    <ul class="nav navbar-nav">
+                        <!-- Logout -->
+                        <li class="dropdown user user-menu">
+                            <a href="#" title="خروج" class="waves-effect waves-light dropdown-toggle btn-outline no-border">
+                                <i class="img-fluid svg-icon" data-feather="log-out"></i>
+                            </a>
+                        </li>
+                        <!-- User Account-->
+                        <li class="dropdown user user-menu">
+                            <a href="#" class="waves-effect waves-light dropdown-toggle btn-outline no-border" title="کاربر">
+                                <img src="@Url.Content("~/images/svg-icon/user.svg")" class="img-fluid svg-icon" alt="">
+                            </a>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar" title="اعلانات" class="waves-effect waves-light btn-outline no-border">
+                                <img src="@Url.Content("~/images/svg-icon/notifications.svg")" class="img-fluid svg-icon" alt="">
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <aside class="main-sidebar">
+            <!-- sidebar-->
+            <section class="sidebar position-relative">
+                <div class="multinav">
+                    <div class="multinav-scroll" style="height:100%">
+                        <!-- sidebar menu-->
+                        <ul class="sidebar-menu" data-widget="tree">
+                            <li class="header">مدیریت</li>
+                            <li>
+                                <a href="@Url.Action("Index")">
+                                    <i data-feather="compass"></i>
+                                    <span>داشبورد</span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="award"></i>
+                                    <span>برندها</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("Brands")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>لیست برندها</a></li>
+                                    <li><a href="@Url.Action("AddBrand")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>ثبت برند‌ جدید</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="package"></i>
+                                    <span>گروه‌ها</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("Groups")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>لیست گروه‌ها</a></li>
+                                    <li><a href="@Url.Action("AddGroup")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>ثبت گروه‌‌ جدید</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="list"></i>
+                                    <span>کالاها</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("Products")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>لیست محصولات</a></li>
+                                    <li><a href="@Url.Action("AddProduct")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>ثبت محصول جدید</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="grid"></i>
+                                    <span>فروشگاه</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("Orders", new { type = "new" })"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>سفارشات جدید</a></li>
+                                    <li><a href="@Url.Action("Orders")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>سفارشات</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="star"></i>
+                                    <span>پیشنهاد‌ها</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu"> 
+                                    <li><a href="@Url.Action("Gifts")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>مدیریت هدایا</a></li>
+                                    <li><a href="@Url.Action("Offers")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>کد های تخفیف</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="users"></i>
+                                    <span>کاربران</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("Users")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i> لیست کاربران</a></li>
+                                    <li><a href="@Url.Action("Users", new { type = "subs" })"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>اعضای خبرنامه</a></li>
+                                    <li><a href="@Url.Action("Users", new { type = "admin" })"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>مدیران</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="message-square"></i>
+                                    <span>پشتیبانی</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("Tickets", new { type = "open" })"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>تیکت‌های باز</a></li>
+                                    <li><a href="@Url.Action("Tickets")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>تیکت‌ها</a></li>
+                                    <li><a href="@Url.Action("Tickets", new { type = "archive" })"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>آرشیو</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="pie-chart"></i>
+                                    <span>گزارشات</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("Reports")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>گزارش کلی</a></li>
+                                    <li><a href="@Url.Action("SaleReports")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>آمار فروش</a></li>
+                                    <li><a href="@Url.Action("UserReports")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>آمار کاربران</a></li>
+                                    <li><a href="@Url.Action("SuportReports")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>آمار پشتیبانی</a></li>
+                                    <li><a href="@Url.Action("BlogReports")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>آمار وبلاگ</a></li> 
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Files")">
+                                    <i data-feather="file-plus"></i>
+                                    <span>فایل منیجر</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Language")">
+                                    <i data-feather="globe"></i>
+                                    <span>مدیریت زبان ها</span>
+                                </a>
+                            </li>
+
+                            @*User Section*@
+                            <li class="header">کاربر</li>
+                            <li>
+                                <a href="@Url.Action("Index")">
+                                    <i data-feather="home"></i>
+                                    <span>داشبورد</span>
+                                </a>
+                            </li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i data-feather="message-square"></i>
+                                    <span>پشتیبانی</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-right pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a href="@Url.Action("UserTickets", new { type = "open" })"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>تیکت‌های من</a></li>
+                                    <li><a href="@Url.Action("AddUserTickets")"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>تیکت‌ جدید</a></li>
+                                    <li><a href="@Url.Action("UserTickets", new { type = "archive" })"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>آرشیو</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("UserOrders")">
+                                    <i data-feather="list"></i>
+                                    تاریخچه سفارشات
+                                </a>
+                            </li>   
+                            <li>
+                                <a href="@Url.Action("UserTrack")">
+                                    <i data-feather="compass"></i>
+                                    پیگیری سفارش
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="sidebar-widgets">
+                            <div class="copyright text-start m-25">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <div class="container-full">
+                <!-- Content Header (Page header) -->
+                <div class="content-header">
+                    <div class="d-flex align-items-center">
+                        <div class="me-auto">
+                            <h4 class="page-title">@ViewData["Title"]</h4>
+                            <div class="d-inline-block align-items-center">
+
+
+                                @if (ViewData["Pages"] is List<KeyValuePair<string, string>> pages && pages.Count > 0)
+                                {
+                                    <nav>
+                                        <ol class="breadcrumb">
+                                            <li class="breadcrumb-item"><a href="@Url.Action("Index")"><i class="mdi mdi-home-outline"></i></a></li>
+
+                                            @foreach (var page in pages)
+                                            {
+                                                if (page.Equals(pages.Last()))
+                                                {
+                                                    <li class="breadcrumb-item"><a href="@Url.Action(page.Value)">@(page.Key)</a></li>
+                                                }
+                                                else
+                                                {
+                                                    <li class="breadcrumb-item active" aria-current="page">@(page.Key)</li>
+                                                }
+                                            }
+                                        </ol>
+                                    </nav>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Main content -->
+                <section class="content">
+                    @RenderBody()
+                </section>
+                <!-- /.content -->
+            </div>
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="pull-right d-none d-sm-inline-block">
+                <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">ثبت باگ</a>
+                    </li>
+                </ul>
+            </div>
+            &copy; ۱۴۰۲ <a href="https://alephba-system.ir">الفباسیستم‌مانا</a>.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar">
+            <div class="rpanel-title" data-toggle="control-sidebar"><span class="pull-right btn btn-circle btn-danger"><i class="ion ion-close text-white"></i></span> </div>
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs control-sidebar-tabs">
+                <li class="nav-item"><a href="#control-sidebar-home-tab" data-bs-toggle="tab" class="active"><i class="mdi mdi-message-text"></i></a></li>
+                <li class="nav-item"><a href="#control-sidebar-settings-tab" data-bs-toggle="tab"><i class="mdi mdi-playlist-check"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <div class="tab-pane active" id="control-sidebar-home-tab">
+                    <div class="flexbox">
+                        <p>اعلانات</p>
+                    </div>
+                    <div class="media-list media-list-hover mt-20">
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <!-- Settings tab content -->
+                <div class="tab-pane" id="control-sidebar-settings-tab">
+                    <div class="flexbox">
+                        <p>تنظیمات اعلانات</p>
+                    </div>
+                    <ul class="todo-list mt-20">
+                        <li class="py-15 px-5 by-1">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_1" class="filled-in">
+                            <label for="basic_checkbox_1" class="mb-0 h-15"></label>
+                            <!-- todo text -->
+                            <span class="text-line">فعالیت اول منقضی شد</span>
+                            <!-- Emphasis label -->
+                            <small class="badge bg-danger"><i class="fa fa-clock-o"></i> ۴ دقیقه پیش</small>
+                            <!-- General tools such as edit or delete-->
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li class="py-15 px-5">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_2" class="filled-in">
+                            <label for="basic_checkbox_2" class="mb-0 h-15"></label>
+                            <span class="text-line">ایتم بررسی شد</span>
+                            <small class="badge bg-info"><i class="fa fa-clock-o"></i> ۳ دقیقه پیش</small>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li class="py-15 px-5 by-1">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_3" class="filled-in">
+                            <label for="basic_checkbox_3" class="mb-0 h-15"></label>
+                            <span class="text-line">خطا در تراکنش خرید</span>
+                            <small class="badge bg-warning"><i class="fa fa-clock-o"></i> ۱ روز پیش</small>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li class="py-15 px-5">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_4" class="filled-in">
+                            <label for="basic_checkbox_4" class="mb-0 h-15"></label>
+                            <span class="text-line">ثبت با موفقیت انجام شد</span>
+                            <small class="badge bg-success"><i class="fa fa-clock-o"></i> ۳ روز پیش</small>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li class="py-15 px-5 by-1">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_5" class="filled-in">
+                            <label for="basic_checkbox_5" class="mb-0 h-15"></label>
+                            <span class="text-line">پشتیبانی کامل شد</span>
+                            <small class="badge bg-primary"><i class="fa fa-clock-o"></i> ۱ هفته پیش</small>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li class="py-15 px-5">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_6" class="filled-in">
+                            <label for="basic_checkbox_6" class="mb-0 h-15"></label>
+                            <span class="text-line">بررسی کامل</span>
+                            <small class="badge bg-info"><i class="fa fa-clock-o"></i> ۱ ماه پیش</small>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+
+
+                        <li class="py-15 px-5 by-1">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_9" class="filled-in">
+                            <label for="basic_checkbox_9" class="mb-0 h-15"></label>
+                            <span class="text-line">درخواست ناموفق</span>
+                            <small class="badge bg-warning"><i class="fa fa-clock-o"></i> ۱ روز پیش</small>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                        <li class="py-15 px-5">
+                            <!-- checkbox -->
+                            <input type="checkbox" id="basic_checkbox_10" class="filled-in">
+                            <label for="basic_checkbox_10" class="mb-0 h-15"></label>
+                            <span class="text-line">بررسی مدارک کامل شد</span>
+                            <small class="badge bg-success"><i class="fa fa-clock-o"></i> ۳ روز پیش</small>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.tab-pane -->
+            </div>
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+
+    </div>
+    <!-- ./wrapper -->
+    <!-- Vendor JS -->
+    <script src="@Url.Content("~/assets/js/vendors.min.js")"></script>
+    <script src="@Url.Content("~/assets/icons/feather-icons/feather.min.js")"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <!-- Master Admin App -->
+    <script src="@Url.Content("~/assets/js/template.js")"></script>
+</body>
+</html>

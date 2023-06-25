@@ -1,0 +1,327 @@
+﻿<!DOCTYPE html>
+<html lang="@ViewData["Locale"] ">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@ViewData["Description"]" />
+    <meta name="keywords" itemprop="keywords" content="@ViewData["Keywords"]" />
+    <meta property="og:locale" content="@ViewData["Locale"]" />
+    <meta property="og:type" content="shop" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
+    <meta property="og:site_name" content="@ViewData["Name"]" />
+    <meta property="og:image" content="@ViewData["Image"]" />
+    <meta name="msapplication-TileImage" content="@ViewData["Image"]">
+    <meta name="theme-color" content="#555">
+
+    <title>@ViewData["Title"] - Yani</title>
+    
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@ViewData["Image"]" asp-append-version="true">
+    <link rel="manifest" href="~/manifest.json" asp-append-version="true">
+    <link rel="icon" type="image/png" sizes="192x192" href="@ViewData["Image"]" asp-append-version="true">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Yani.styles.css" asp-append-version="true" />
+    <link rel="shortcut icon" href="~/fav.png" asp-append-version="true">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Yani</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+	<header class="web-header-section w-100 bg-white" id="menu">
+		<div class="top-menu d-none d-md-block pb-2 pb-sm-0 bg-light">
+			<div class="container-fluid d-flex flex-column flex-sm-row justify-content-between px-sm-4">
+				<div class="lang text-right text-dark ml-auto">
+					<i class="fal fa-globe"></i>
+					<select class="bg-transparent border-0 text-dark" id="lang" onchange="location = this.value;">
+						<option class="bg-light text-dark" value="/site/change_lan?lan=FA">
+							فارسی
+						</option>
+						<option class="bg-light text-dark" value="/site/change_lan?lan=EN">
+							EN
+						</option>
+						<option class="bg-light text-dark" value="/site/change_lan?lan=AR">
+							عربی
+						</option>
+					</select>
+				</div>
+				<ul class="d-flex flex-column flex-sm-row mx-sm-2 pt-0 py-sm-1 text-right">
+					<li class="ml-5 icon-login">
+						<div class="icon-load">
+							<span class="text-dark" data-toggle="tooltip" data-placement="bottom" title="ثبت نام" onclick="open_signup()"><i class="fal fa-user-plus"></i></span>/
+							<a href="/site/login"><span class="text-dark" data-toggle="tooltip" data-placement="bottom" title="ورود به پنل کاربری" <!--onclick="open_login()"-->><i class="far fa-sign-in-alt"></i></span></a>
+							<div class="user-btns  dropdown" id="header-l">
+								<a href="#" role="button" id="login-dropdown-btn-res" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><?= Yii::$app->user->identity->name ?> <?= Yii::$app->user->identity->last_name ?></a>
+								<ul class="login-dropdown-res dropdown-menu py-2 text-end" aria-labelledby="login-dropdown-btn-res">
+									<li><a class="dropdown-item" href="/site/mypanel"><i class="far fa-tachometer-alt ml-1"></i> پنل کاربری</a></li>
+									<li><a class="dropdown-item" href="/site/logout"><i class="fal fa-sign-out ml-1"></i> خروج از حساب</a></li>
+								</ul>
+							</div>
+						</div>
+					</li>
+					<li class="ml-5">
+						<a class="text-dark" href="/factor/search"><i class="fal fa-mailbox ml-2"></i>پیگیری سفارشات</a>
+					</li>
+					<li>
+						<a class="text-dark" href="/blog/all"><i class="fal fa-newspaper ml-2"></i>مقالات</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="logo-search mt-md-3 mb-1">
+			<div class="container-fluid px-md-5">
+				<div class="d-flex position-relative pt-md-4 pt-lg-0">
+					<div class="d-flex">
+						<button class="category-btn menu-icon d-lg-none ml-3 p-0 border-0 bg-transparent text-dark z-100" onclick="open_menu()"><i class="fal fa-bars"></i></button>
+						<form action="/serach/key" method="get" class="searchbox d-none d-md-block py-1 px-2 text-right">
+							<button class="bg-transparent border-0"><i class="fal fa-search"></i></button>
+							<input class="bg-transparent border-0" placeholder="جستجو" type="text" name="word">
+						</form>
+					</div><a class="logo position-absolute text-center" href="/"><img alt="logo" src="/uploads/Global/logo.png"></a>
+					<div class="user-cart mr-auto pt-2 d-flex align-items-center justify-content-end">
+						<div class="ml-4 icon-login d-md-none">
+							<div class="icon-load d-md-none">
+								<span class="text-dark" data-toggle="tooltip" data-placement="bottom" title="ثبت نام" onclick="open_signup()"><i class="fal fa-user-plus"></i></span>/
+								<span class="text-dark" data-toggle="tooltip" data-placement="bottom" title="ورود به پنل کاربری" onclick="open_login()"><i class="far fa-sign-in-alt"></i></span>
+								<div class="user-btns  dropdown" id="header-l">
+									<a href="#" role="button" id="login-dropdown-btn-res" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><?= Yii::$app->user->identity->name ?></a>
+									<ul class="login-dropdown-res dropdown-menu py-2 text-end" aria-labelledby="login-dropdown-btn-res">
+										<li><a class="dropdown-item" href="/site/mypanel"><i class="far fa-tachometer-alt ml-1"></i> پنل کاربری</a></li>
+										<li><a class="dropdown-item" href="/site/logout"><i class="fal fa-sign-out ml-1"></i> خروج از حساب</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<span class="fal fa-shopping-bag text-dark pointer-sho" onclick="go_to_card()"></span>
+					</div>
+				</div>
+				<form action="/serach/key" method="get" class="searchbox d-block d-md-none mt-3 py-1 px-2 text-right">
+					<button class="bg-transparent border-0"><i class="fal fa-search"></i></button>
+					<input class="bg-transparent border-0" placeholder="جستجو" type="text" name="word">
+				</form>
+			</div>
+		</div>
+		<nav class="navbar navbar-expand-lg navbar-dark">
+			<div class="collapse navbar-collapse mx-auto" id="navbarSupportedContent">
+				<ul class="navbar-nav mx-auto">
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="/">
+							<i class="fal fa-home ml-2"></i>
+							صفحه نخست
+						</a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="/shop">
+							<i class="fal fa-store ml-2"></i>
+							فروشگاه
+						</a>
+					</li>
+
+
+					<li class="nav-item dropdown a">
+						<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/product/all" id="navbarDropdown" role="button">محصولات <i class="fal fa-angle-down"></i></a>
+						<div aria-labelledby="navbarDropdown" class="dropdown-menu">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+											<li class="nav-item product-item-h a">
+												<a class="nav-link active" href="/products/<?= $value->en_name ?>">
+												</a>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+										</ul>
+									</div>
+								</div>
+							</div><!--  /.container  -->
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/men-perfume/all" id="navbarDropdown" role="button">آقایان  <i class="fal fa-angle-down"></i></a>
+						<div aria-labelledby="navbarDropdown" class="dropdown-menu">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+											<li class="nav-item product-item-h">
+												<a class="nav-link active" href="/men/<?= $value->en_name ?>"><?= $value->fa_name ?></a>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+										</ul>
+									</div>
+								</div>
+							</div><!--  /.container  -->
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/female-perfume/all" id="navbarDropdown" role="button">بانوان  <i class="fal fa-angle-down"></i></a>
+						<div aria-labelledby="navbarDropdown" class="dropdown-menu">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+											<li class="nav-item product-item-h">
+												<a class="nav-link active" href="/female/<?= $value->en_name ?>"><?= $value->fa_name ?></a>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+										</ul>
+									</div>
+								</div>
+							</div><!--  /.container  -->
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="/universal-perfume/all" id="navbarDropdown" role="button">یونیورسال  <i class="fal fa-angle-down"></i></a>
+						<div aria-labelledby="navbarDropdown" class="dropdown-menu">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+											<li class="nav-item product-item-h">
+												<a class="nav-link active" href="/universal/<?= $value->en_name ?>"><?= $value->fa_name ?></a>
+											</li>
+										</ul>
+									</div>
+									<div class="col-md-2">
+										<ul class="nav flex-sm-column">
+										</ul>
+									</div>
+								</div>
+							</div><!--  /.container  -->
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" id="navbarDropdown" role="button">مقالات <i class="fal fa-angle-down"></i></a>
+						<div aria-labelledby="navbarDropdown" class="dropdown-menu">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-3">
+										<span class="text-uppercase"><?= $value->name ?></span>
+										<ul class="nav flex-sm-column">
+											<li class="nav-item">
+												<a class="nav-link active" href="/articles/<?= $value2->name?>"><?= $value2->name ?></a>
+											</li>
+										</ul>
+									</div><!-- /.col-md-3  -->
+								</div>
+							</div><!--  /.container  -->
+						</div>
+					</li>
+					<li class="nav-item dropdown">
+						<a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" id="navbarDropdown" role="button">ویدئو ها <i class="fal fa-angle-down"></i></a>
+						<div aria-labelledby="navbarDropdown" class="dropdown-menu">
+							<div class="container">
+								<div class="row">
+									<div class="col-md-3">
+										<ul class="nav flex-sm-column">
+											<li class="nav-item">
+												<a class="nav-link active" href="/videos/<?= $value->name ?>"><?= $value->name ?></a>
+											</li>
+										</ul>
+									</div>
+				</ul>
+			</div>
+
+			</div>
+			</div><!--  /.container  -->
+			</div>
+			</li>
+			<li class="nav-item d-flex align-items-center">
+				<a class="nav-link pt-1 pb-0" href="/product/offerproduct">
+					آفرهای ویژه
+				</a>
+			</li>
+			<li class="nav-item d-flex align-items-center">
+				<a class="nav-link pt-1 pb-0" href="/vip-product/all">
+					VIP
+				</a>
+			</li>
+			<li class="nav-item d-flex align-items-center">
+				<a class="nav-link pt-1 pb-0" href="/products/Decant  Perfumes">
+					Decant
+				</a>
+			</li>
+			</ul>
+			</div>
+		</nav>
+	</header>
+
+	<header class="web-header-section d-none w-100 bg-white" id="scroll-menu">
+		<div class="logo-search my-2">
+			<div class="container-fluid px-md-5">
+				<div class="d-flex flex-column-reverse flex-sm-row position-relative justify-content-between">
+					<div class="d-flex">
+						<button class="category-btn menu-icon d-none d-md-inline-block d-lg-none ml-3 p-0 pb-1 border-0 bg-transparent text-dark z-100" onclick="open_menu()"><i class="fal fa-bars"></i></button>
+						<a class="second-logo d-none d-sm-block d-md-none ml-2" href="/">
+							<img alt="logo" src="/uploads/Global/logo.png">
+						</a>
+						<form action="/serach/key" method="get" class="searchbox py-1 px-2 text-right">
+							<button class="pb-1 bg-transparent border-0"><i class="fal fa-search"></i></button>
+							<input class="bg-transparent border-0" placeholder="جستجو" type="text" name="word">
+						</form>
+					</div>
+					<a class="logo d-none d-md-block position-absolute text-center" href="#"><img alt="logo" src="/uploads/Global/logo.png"></a>
+					<div class="user-cart d-flex justify-content-between d-sm-block pt-sm-2">
+						<a class="tirth-logo d-sm-none" href="/"><img alt="logo" src="/uploads/Global/logo.png"></a>
+						<div class="pt-1 pt-sm-0">
+							<!--<a class="fal fa-user ml-3 text-dark" href="/site/login"></a> -->
+							<span class="fal fa-shopping-bag text-dark pointer-sho" href="/product/card" onclick="go_to_card()"></span>
+							<button class="category-btn category-btn3 menu-icon d-md-none d-lg-none mr-3 p-0 border-0
+							bg-transparent text-dark z-100" onclick="open_menu()">
+								<i class="fal fa-bars"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - Yani - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,92 @@
+﻿@{
+    Layout = "_Dashboard";
+}
+@section Scripts
+    {
+    <script src="@Url.Content("~/assets/js/pages/addgroup.js")"></script>
+    }
+@section Styles
+    {
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/pages/addgroup.css")">
+    }
+
+<div class="row">
+    <div class="col-12">
+        <div class="box">
+            <div class="box-header with-border">
+                <h4 class="box-title">گروه</h4>
+            </div>
+            <div class="box-body">
+                <form action="@Url.Action("AddGroup")">
+                    <div class="form-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="fw-700 fs-16 form-label">نام</label>
+                                    <input type="text" class="form-control" placeholder="نام گروه" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <div class="box-body">
+                                        <div class="dropdown">
+                                            <button class="btn btn-rounded btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown">ایکون</button>
+                                            <div class="dropdown-menu dropdown-grid">
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="award"></i>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="percent"></i>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="droplet"></i>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="coffee"></i>
+                                                </a>
+                                                <a class="dropdown-item active" href="#">
+                                                    <i data-feather="headphones"></i>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="zap"></i>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="heart"></i>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="activity"></i>
+                                                </a>
+                                                <a class="dropdown-item" href="#">
+                                                    <i data-feather="home"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="fw-700 fs-16 form-label">گروه پدر</label>
+                                    <div class="btn-group">
+                                        <button class="btn btn-rounded btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">گروه</button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#">عملیات</a>
+                                            <a class="dropdown-item" href="#">دیگر</a>
+                                            <a class="dropdown-item" href="#">سایر</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="form-actions mt-10">
+                        <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> ثبت</button>
+                        <button class="btn btn-warning" onclick="location.href='@Url.Action("Groups")'">لغو</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

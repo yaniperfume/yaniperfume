@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33402.96
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Yani", "Yani\Yani.csproj", "{6641DA6D-4CDF-4F01-BF59-250C9C9386F5}"
+EndProject
+Project("{13B669BE-BB05-4DDF-9536-439F39A36129}") = "YaniSite", "F:\Projects\yaniperfume.com\public_html\YaniSite.phpproj", "{471F2F22-E065-4B6A-B3C7-4D1C398FCA8C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6641DA6D-4CDF-4F01-BF59-250C9C9386F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6641DA6D-4CDF-4F01-BF59-250C9C9386F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6641DA6D-4CDF-4F01-BF59-250C9C9386F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6641DA6D-4CDF-4F01-BF59-250C9C9386F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{471F2F22-E065-4B6A-B3C7-4D1C398FCA8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{471F2F22-E065-4B6A-B3C7-4D1C398FCA8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{471F2F22-E065-4B6A-B3C7-4D1C398FCA8C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {02A2CF1D-2731-4190-A086-5D6D24D3ECAD}
+	EndGlobalSection
+EndGlobal

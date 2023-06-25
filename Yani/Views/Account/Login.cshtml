@@ -1,0 +1,133 @@
+﻿@model Yani.Models.Account.LoginWithPassword
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" itemprop="keywords" content="@ViewBag.Keywords" />
+    <meta property="og:locale" content="@ViewBag.Locale" />
+    <meta property="og:type" content="shop" />
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:site_name" content="@ViewBag.Name" />
+    <meta property="og:image" content="@ViewBag.Image" />
+    <meta name="msapplication-TileImage" content="@ViewBag.Image">
+    <meta name="theme-color" content="#555">
+
+    <title>@ViewBag.Title</title>
+
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="manifest" href="/manifest.json" asp-append-version="true">
+    <link rel="icon" type="image/png" sizes="192x192" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="shortcut icon" href="/fav.png" asp-append-version="true">
+
+    <!-- Vendors Style-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/vendors_css.css")">
+
+    <!-- Style-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/style.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/skin_color.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/style-rtl.min.css")">
+</head>
+
+<body class="hold-transition theme-primary bg-img" style="background-image: url(/images/auth-bg/bg-1.jpg)">
+
+    <div class="container h-p100">
+        <div class="row align-items-center justify-content-md-center h-p100">
+
+            <div class="col-12">
+                <div class="row justify-content-center g-0">
+                    <div class="col-lg-5 col-md-5 col-12">
+
+                        <div class="content-top-agile p-20 pb-0 mb-15">
+                            <h2 class="text-warning">ورود به حساب کاربری</h2>
+                        </div>
+                        <div class="bg-white rounded10 shadow-lg">
+                            <ul class="nav nav-tabs customtab2" role="tablist">
+                                <li class="nav-item"> <a class="nav-link active" data-bs-toggle="tab" href="#phoneLogin" role="tab"><span class="hidden-sm-up"><i class="ion-home"></i></span> <span class="hidden-xs-down">ورود با شماره همراه</span></a> </li>
+                                <li class="nav-item"> <a class="nav-link" data-bs-toggle="tab" href="#passLogin" role="tab"><span class="hidden-sm-up"><i class="ion-person"></i></span> <span class="hidden-xs-down">ورود با نام کاربری</span></a> </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="phoneLogin" role="tabpanel">
+                                    <div class="p-40">
+                                        <form action="/Account/LoginWithPhoneNumber" method="post" id="loginWithPhone">
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <input type="tel" class="form-control ps-15 bg-transparent" placeholder="شماره همراه" name="PhoneNumber">
+                                                    <span class="input-group-text bg-transparent"><i class="ti-mobile"></i></span>
+                                                </div>
+                                                <span id="phoneValidator" class="text-danger">شماره وارد شده معتبر نمی باشد</span>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <input type="text" class="form-control ps-15 bg-transparent" placeholder="کد یکبار مصرف" name="Otp">
+                                                    <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
+                                                </div>
+                                                <a href="#" class="timer-xs">00:00</a>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button type="submit" class="btn btn-danger mt-10" id="phoneSubmit">ارسال کد</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="passLogin" role="tabpanel">
+                                    <div class="p-40">
+                                        <form action="/Account/Login" method="post">
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <input asp-for="Username" type="text" class="form-control ps-15 bg-transparent" placeholder="نام کاربری" name="Username">
+                                                    <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+                                                </div>
+                                                <span asp-validation-for="Username" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group mb-3">
+                                                    <input asp-for="Password" type="password" class="form-control ps-15 bg-transparent" placeholder="پسوورد" name="Password">
+                                                    <span class="input-group-text  bg-transparent"><i class="ti-lock"></i></span>
+                                                </div>
+                                                <span asp-validation-for="Password" class="text-danger"></span>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 text-center">
+                                                    <button type="submit" class="btn btn-danger mt-10">ورود</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <div class="row">
+                                <p class="mt-15 mb-0"> برای ثبت نام <a href="/account/register" class="text-warning ms-5"> کلیک کنید</a></p>
+                            </div>
+                            <div class="row">
+                                <a href="javascript:void(0)" class="text-warning mt-15 mb-0"><i class="ion ion-locked"></i> بازیابی رمز عبور</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Vendor JS -->
+    <script src="@Url.Content("~/assets/js/vendors.min.js")"></script>
+    <script src="@Url.Content("~/assets/icons/feather-icons/feather.min.js")"></script>
+    <script src="@Url.Content("~/assets/js/pages/login.js")"></script>
+
+</body>
+</html>

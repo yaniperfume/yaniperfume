@@ -1,0 +1,121 @@
+﻿@model Yani.Models.Account.LoginWithPassword
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="@ViewBag.Description" />
+    <meta name="keywords" itemprop="keywords" content="@ViewBag.Keywords" />
+    <meta property="og:locale" content="@ViewBag.Locale" />
+    <meta property="og:type" content="shop" />
+    <meta property="og:title" content="@ViewBag.Title" />
+    <meta property="og:description" content="@ViewBag.Description" />
+    <meta property="og:site_name" content="@ViewBag.Name" />
+    <meta property="og:image" content="@ViewBag.Image" />
+    <meta name="msapplication-TileImage" content="@ViewBag.Image">
+    <meta name="theme-color" content="#555">
+
+    <title>@ViewBag.Title</title>
+
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="manifest" href="/manifest.json" asp-append-version="true">
+    <link rel="icon" type="image/png" sizes="192x192" href="@ViewBag.Image" asp-append-version="true">
+    <link rel="shortcut icon" href="/fav.png" asp-append-version="true">
+
+    <!-- Vendors Style-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/vendors_css.css")">
+
+    <!-- Style-->
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/style.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/skin_color.css")">
+    <link rel="stylesheet" href="@Url.Content("~/assets/css/style-rtl.min.css")">
+</head>
+
+<body class="hold-transition theme-primary bg-img" style="background-image: url(/images/auth-bg/bg-1.jpg)">
+
+    <div class="container h-p100">
+        <div class="row align-items-center justify-content-md-center h-p100">
+
+            <div class="col-12">
+                <div class="row justify-content-center g-0">
+                    <div class="col-lg-5 col-md-5 col-12">
+                        <div class="bg-white rounded10 shadow-lg">
+                            <div class="content-top-agile p-20 pb-0">
+                                <h2 class="text-primary mm">با ما شروع کن</h2>
+                                <p class="mb-0 mm">عضوی از ما شو</p>
+                            </div>
+                            <div class="p-40">
+                                <form action="/account/register" method="post">
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control ps-15 bg-transparent" placeholder="نام">
+                                            <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control ps-15 bg-transparent" placeholder="نام خانوادگی">
+                                            <span class="input-group-text bg-transparent"><i class="ti-user"></i></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="email" class="form-control ps-15 bg-transparent" placeholder="ایمیل">
+                                            <span class="input-group-text bg-transparent"><i class="ti-email"></i></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="password" class="form-control ps-15 bg-transparent" placeholder="رمز عبور">
+                                            <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="input-group mb-3">
+                                            <input type="password" class="form-control ps-15 bg-transparent" placeholder="تائید رمز عبور">
+                                            <span class="input-group-text bg-transparent"><i class="ti-lock"></i></span>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button type="submit" class="btn btn-info">ثبت نام</button>
+                                        </div>
+                                        <div class="col-6" style="float:right; direction:rtl;">
+                                            <div class="checkbox">
+                                                <input type="checkbox" id="basic_checkbox_1">
+                                                <label for="basic_checkbox_1">شرایط را <a href="#" class="text-warning"><b>قبول دارم</b></a></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="text-center">
+                                    <p class="mt-15 mb-0">حساب کاربری دارید؟<a href="/account/login" class="text-danger ms-5">  ورود</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Vendor JS -->
+    <script src="@Url.Content("~/assets/js/vendors.min.js")"></script>
+    <script src="@Url.Content("~/assets/icons/feather-icons/feather.min.js")"></script>
+    <script src="@Url.Content("~/assets/js/pages/login.js")"></script>
+
+</body>
+</html>

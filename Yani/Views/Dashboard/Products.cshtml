@@ -1,0 +1,63 @@
+﻿@{
+    Layout = "_Dashboard";
+}
+@section Scripts 
+{
+    <script src="@Url.Content("~/assets/vendor_components/datatable/datatables.min.js")"></script>
+    <script src="@Url.Content("~/assets/js/pages/data-table.js")"></script>
+    }
+@section Styles 
+{
+    <link rel="stylesheet" href="@Url.Content("~/assets/vendor_components/datatable/datatables.min.css")">
+    }
+<div class="col-12">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">محصولات</h3>
+            <button class="btn btn-success" onclick="location.href='@Url.Action("AddProduct")'">افزودن محصول جدید</button>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table id="example1" class="table table-striped table-hover no-wrap product-order" data-page-size="10">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>تصویر</th>
+                            <th>کد حسابداری</th>
+                            <th>کد کالا</th> 
+                            <th>نام کالا</th>
+                            <th>قیمت هر واحد</th>
+                            <th>برند کالا</th>
+                            <th>گروه کالا</th>
+                            <th>جنسیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><img src="@Url.Content("~/images/product/product-5.png")" alt="" height="60"></td>
+                            <td>123456</td>
+                            <td>123456</td>
+                            <td>Hermes</td>
+                            <td>124563</td>
+                            <td>Hermes</td>
+                            <td>عطر</td>
+                            <td>Male</td>
+                            <td>
+                                <a href="javascript:void(0)" class="text-info me-10" data-bs-toggle="tooltip" data-bs-original-title="ویرایش">
+                                    <i class="ti-marker-alt"></i>
+                                </a>
+                                <a href="javascript:void(0)" class="text-danger" data-bs-original-title="حذف" data-bs-toggle="tooltip">
+                                    <i class="ti-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>

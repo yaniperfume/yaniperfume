@@ -1,0 +1,15 @@
+{
+    "name" : "Yani Perfume",
+    "short_name" : "عطر یانی",
+    "start_url" : "/",
+    "scope" : ".",
+    "display" : "standalone",
+    "dir" : "rtl",
+    "lang" : "fa",
+    "background_color" : "#fdfdfd",
+    "icons": [{
+        "src": "assets/images/yani_perfume.png",
+        "sizes": "300x300",
+        "type": "image/png"
+    }]
+}
