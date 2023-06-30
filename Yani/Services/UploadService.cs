@@ -10,8 +10,9 @@ namespace Yani.Services
             _env = env;
         }
 
-        public string UploadFile(IFormFile file)
+        public string UploadFile(IFormFile? file)
         {
+            if (file is null) return "/images/brands/hermes.png";
             var uploadDirectory = Path.Combine(_env.WebRootPath, "uploads");
             var fileName = Guid.NewGuid().ToString() + "_" + DateTime.Now.ToString("yyyyMMddHHmmss") + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(uploadDirectory, file.ContentType, fileName);

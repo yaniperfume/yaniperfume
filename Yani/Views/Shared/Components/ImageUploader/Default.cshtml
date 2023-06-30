@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model Yani.Models.Components.ImageUploaderModel
+
+<h4 class="box-title mt-20">اپلود تصویر</h4>
+<div class="product-img text-start">
+    <img src="@Model.DefaultImage" alt="" id="displayImage">
+    <input type="file" class="d-none" name="imageData" id="imageData" value="">
+    <div class="input-group my-3">
+        <a href="#" class="btn btn-primary" id="addImage">اپلود تصویر</a>
+        <a href="#" id="removeImage" class="btn btn-danger">حذف</a>
+    </div>
+    <div id="errorMessage" class="alert alert-danger">تصویر انتخاب شده باید کمتر از 1 مگابایت باشد.</div>
+</div> 

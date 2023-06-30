@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using NuGet.Protocol.Core.Types;
-using Yani.Models;
+using System.Security.Claims;
 using Yani.Models.Dashboard;
 using Yani.Models.Database;
 using Yani.Services;
 
 namespace Yani.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = CookieAuthenticationDefaults.AuthenticationScheme)]
     public class DashboardController : Controller
     {
         private readonly BeShopContext _context;
@@ -69,13 +60,13 @@ namespace Yani.Controllers
                 OpenTickets = new BoxModel() { Percentage = openTicketsChange.ToString("+#.##%;-#.##%"), Value = openTicketsCount.ToString() },
             };
             var gender = _userService.GetGender();
-            var recommendedproducts = _productService.GetHighestScoreProducts(5);
+            var recommendedProducts = _productService.GetHighestScoreProducts(5);
             var dashboardModel = new DashboardModel()
             {
                 BoxesModel = dashboardBoxes,
                 UsersStars = userReviews,
                 UsersByGender = gender,
-                RecommendedProducts = recommendedproducts,
+                RecommendedProducts = recommendedProducts,
             };
 
             return View(dashboardModel);
@@ -157,11 +148,14 @@ namespace Yani.Controllers
         {
             if (ModelState.IsValid)
             {
+                int? loginId = int.TryParse(User.FindFirstValue(ClaimTypes.NameIdentifier), out var lid) ? lid : null;
                 var brand = new Brand
                 {
                     BrandName = model.BrandName,
-                    ImageUrl = _uploadService.UploadFile(model.BrandImage),
-                    CreatedBy = 1,
+                    ImageUrl = _uploadService.UploadFile(model.Image),
+                    CreatedBy = loginId,
+                    UpdatedBy = loginId,
+                    UpdateDate = DateTime.Now,
                     CreatedDate = DateTime.Now,
                 };
 

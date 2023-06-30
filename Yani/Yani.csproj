@@ -33,7 +33,6 @@
 	<ItemGroup>
 		<Folder Include="Data\" />
 		<Folder Include="Extentions\" />
-		<Folder Include="Views\Shared\" />
 		<Folder Include="wwwroot\images\" />
 	</ItemGroup>
 

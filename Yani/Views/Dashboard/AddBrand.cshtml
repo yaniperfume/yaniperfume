@@ -1,16 +1,18 @@
-﻿@{
+﻿@using Yani.Models.Components;
+@{
     Layout = "_Dashboard";
 }
 @section Scripts
-    {
+{
     <script src="@Url.Content("~/assets/js/pages/addbrand.js")"></script>
     <script src="@Url.Content("~/assets/vendor_components/bootstrap-select/dist/js/bootstrap-select.js")"></script>
     <script src="@Url.Content("~/assets/vendor_components/bootstrap-tagsinput/dist/bootstrap-tagsinput.js")"></script>
-    }
+    <script src="@Url.Content("~/assets/js/components/imageUploader.js")"></script>
+}
 @section Styles
-    {
+{
     <link rel="stylesheet" href="@Url.Content("~/assets/css/pages/addbrand.css")">
-    }
+}
 
 <div class="row">
     <div class="col-12">
@@ -19,20 +21,20 @@
                 <h4 class="box-title">برند</h4>
             </div>
             <div class="box-body">
-                <form action="@Url.Action("NewBrand")" method="post">
+                <form action="@Url.Action("AddBrand")" method="post" enctype="multipart/form-data">
                     <div class="form-body">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="fw-700 fs-16 form-label">نام</label>
-                                    <input name="brandName" type="text" class="form-control" placeholder="نام برند" required>
+                                    <input name="BrandName" type="text" class="form-control" placeholder="نام برند" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="fw-700 fs-16 form-label">کلمات کلیدی</label>
                                     <div class="input-group">
-                                        <input name="tags" class="form-control" type="text" data-role="tagsinput" placeholder="تگ را اضافه کنید" onkeydown="return event.key != 'Enter';"> <span class="input-group-addon">تگ ها</span>
+                                        <input name="Tags" class="form-control" type="text" data-role="tagsinput" placeholder="تگ را اضافه کنید" onkeydown="return event.key != 'Enter';"> <span class="input-group-addon">تگ ها</span>
                                     </div>
                                 </div>
                             </div>
@@ -41,7 +43,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="fw-700 fs-16 form-label">توضیحات محصول</label>
-                                    <textarea name="brandDiscriptions" class="form-control p-15" rows="4" placeholder="توضیحات برند اجباری نیست ولی برای SEO به کار میرود"></textarea>
+                                    <textarea name="BrandDescription" class="form-control p-15" rows="4" placeholder="توضیحات برند اجباری نیست ولی برای SEO به کار میرود"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -49,16 +51,7 @@
                         <div class="row">
                             <!--/span-->
                             <div class="col-md-12">
-                                <h4 class="box-title mt-20">اپلود تصویر</h4>
-                                <div class="product-img text-start">
-                                    <img src="@Url.Content("~/images/avatar.png")" alt="" id="displayImage">
-                                    <input type="hidden" name="brandImage" id="ImageData" value="">
-                                    <div class="input-group my-3">
-                                        <a href="#" class="btn btn-primary" id="addImage">اپلود تصویر</a>
-                                        <a href="#" id="removeImage" class="btn btn-danger">حذف</a>
-                                    </div>
-                                    <div id="errorMessage" class="alert alert-danger">تصویر انتخاب شده باید کمتر از 1 مگابایت باشد.</div>
-                                </div>
+                                @await Component.InvokeAsync("ImageUploader", new ImageUploaderModel { DefaultImage =  Url.Content("~/images/brands/hermes.png")  })
                             </div>
                         </div>
                     </div>

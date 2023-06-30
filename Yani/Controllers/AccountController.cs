@@ -87,13 +87,15 @@ namespace Yani.Controllers
             await _context.SaveChangesAsync();
 
             var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, userLogin.Username),
-                new Claim(ClaimTypes.Email, userLogin.Email),
-                new Claim(ClaimTypes.NameIdentifier, userLogin.LoginId.ToString())
-            };
+                {
+                    new Claim(ClaimTypes.Name, userLogin.Username),
+                    new Claim(ClaimTypes.Email, userLogin.Email),
+                    new Claim(ClaimTypes.NameIdentifier, userLogin.User.UserId.ToString())
+                };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
+            var principal = new ClaimsPrincipal(identity);
+            var properties = new AuthenticationProperties();
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(principal), properties);
             // Redirect to the home page
             return RedirectToAction("Index", "Home");
         }
@@ -125,7 +127,6 @@ namespace Yani.Controllers
                 return View(model);
             }
 
-
             var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, userLogin.Username),
@@ -133,7 +134,9 @@ namespace Yani.Controllers
                     new Claim(ClaimTypes.NameIdentifier, userLogin.LoginId.ToString())
                 };
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-            await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
+            var principal = new ClaimsPrincipal(identity);
+            var properties = new AuthenticationProperties();
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(principal), properties);
 
             if (userLogin == null)
             {
@@ -180,7 +183,9 @@ namespace Yani.Controllers
                     new Claim(ClaimTypes.NameIdentifier, userLogin.LoginId.ToString())
                 };
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-                await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
+                var principal = new ClaimsPrincipal(identity);
+                var properties = new AuthenticationProperties();
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(principal), properties);
                 // Redirect to the home page
                 return RedirectToAction("Index", "Home");
             }

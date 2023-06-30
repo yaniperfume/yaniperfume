@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel.DataAnnotations;
 
 namespace Yani.Models.Dashboard
 {
@@ -8,12 +9,13 @@ namespace Yani.Models.Dashboard
         [StringLength(50, ErrorMessage = "نام برند نمی تواند بیشتر از 50 کاراکتر باشد.")]
         public string BrandName { get; set; }
 
-        public List<string> Tags { get; set; }
-
+        [Display(Name = "تگ های سئو")]
+        public List<string>? Tags { get; set; }
+        
         [Display(Name = "توضیحات برند")]
-        public string BrandDescription { get; set; }
+        public string? BrandDescription { get; set; }
 
         [Display(Name = "تصویر برند")]
-        public IFormFile BrandImage { get; set; }
+        public IFormFile? Image { get; set; }
     }
 }

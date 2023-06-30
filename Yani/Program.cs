@@ -1,13 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Configuration;
-using Yani.Models;
 using Yani.Models.Database;
 using Yani.Services;
-using Yani.Validations;
 
 namespace Yani
 {
@@ -33,8 +27,9 @@ namespace Yani
             .AddCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-                options.Cookie.SameSite = SameSiteMode.Strict;
+                //options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.SameSite = SameSiteMode.Lax;
+                options.Cookie.Name = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.Cookie.IsEssential = true;
                 options.LoginPath = "/Account/Login";
                 options.LogoutPath = "/Account/Logout";

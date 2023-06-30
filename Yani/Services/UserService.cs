@@ -28,14 +28,15 @@ namespace Yani.Services
                             Total = g.Count()
                         };
 
-            return query.FirstOrDefault();
+            return query.FirstOrDefault() ?? new UsersRating() { FiveStar = 0, FourStar = 0, OneStar = 0, OverallStar = 0, ThreeStar = 0, Total = 0, TwoStar = 0 };
         }
 
         public Gender GetGender()
         {
             var genderCounts = _dbContext.Users
                 .GroupBy(u => u.Gender)
-                .Select(g => new {
+                .Select(g => new
+                {
                     Gender = g.Key,
                     Count = g.Count()
                 })
